@@ -206,7 +206,7 @@ ReactDOM.render(
 ### Props are Read-Only
 Whether you declare a component as a function or a class, it must never modify its own props.
 
-* All React components must act like pure functions with respect to their props. *
+**All React components must act like pure functions with respect to their props.**
 
 
 
