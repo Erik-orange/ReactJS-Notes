@@ -29,3 +29,18 @@ You may also use curly braces, `{ }`, to embed a JavaScript expression in an att
 ```jsx
 const element = <img src={user.avatarUrl}></img>;
 ```
+
+### Specifying Children with JSX
+If a tag is empty, you may close it immediately with `/>`, like XML.
+```jsx
+const element = <img src={user.avatarUrl} />;
+```
+JSX tags may contain children.
+```jsx
+const element = (
+  <div>
+    <h1>Hello!</h1>
+    <h2>Good to see you here.</h2>
+  </div>
+);
+```
