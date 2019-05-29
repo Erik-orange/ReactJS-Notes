@@ -1,4 +1,7 @@
 # ReactJS-Notes
+___
+## Intro To JSX
+
 JSX produces React “elements”.
 
 ```jsx
@@ -64,9 +67,42 @@ const element = React.createElement(
   'Hello, world!'
 );
 ```
-`React.createElement()` creates objects called "_React elements_", think of them like descriptions of what you want to see on the screen. 
+`React.createElement()` creates objects called "_React elements_".
+```jsx
+const element = {
+  type: 'h1',
+  props: {
+    className: 'greeting',
+    children: 'Hello, world!'
+  }
+};
+```
+Think of these objects like descriptions of what you want to see on the screen. 
 
 React reads these objects and uses them to construct the DOM and keep it up to date.
+
+___
+
+## Rendering Elements
+Elements are the smallest building blocks of React apps.
+
+An element describes what you want to see on the screen
+```jsx
+const element = <h1>Hello, world</h1>;
+```
+Unlike browser DOM elements, React elements are plain objects, and are cheap to create. 
+
+### Rendering an Element into the DOM
+Let’s say there is a `<div>` somewhere in your HTML file.
+```html
+<div id="root"></div>
+```
+To render a React element into a root DOM node, pass both to `ReactDOM.render()`.
+```jsx
+const element = <h1>Hello, world</h1>;
+ReactDOM.render(element, document.getElementById('root'));
+```
+
 
 
 
