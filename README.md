@@ -178,6 +178,35 @@ Let’s recap what happens in this example:
 
 4. React DOM efficiently updates the DOM to match `<h1>Hello, Sara</h1>`.
 
+### Composing Components
+Components can refer to other components in their output. This lets us use the same component abstraction for any level of detail.
+
+For example, we can create an App component that renders Welcome many times.
+```jsx
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+function App() {
+  return (
+    <div>
+      <Welcome name="Sara" />
+      <Welcome name="Cahal" />
+      <Welcome name="Edite" />
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <App />,
+  document.getElementById('root')
+);
+```
+
+### Props are Read-Only
+Whether you declare a component as a function or a class, it must never modify its own props.
+
+* All React components must act like pure functions with respect to their props. *
 
 
 
