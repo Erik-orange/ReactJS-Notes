@@ -1,10 +1,9 @@
 # ReactJS-Notes
-Personal notes on ReactJS
+JSX produces React “elements”.
 
 ```jsx
 const element = <h1>Hello, world!</h1>;
 ```
-JSX produces React “elements”. 
 
 After compilation, JSX expressions become regular JavaScript function calls and evaluate to JavaScript objects.
 
