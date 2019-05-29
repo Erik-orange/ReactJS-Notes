@@ -263,7 +263,7 @@ class Clock extends React.Component {
 **2.** Add a class constructor that assigns the initial `this.state`.
 ```jsx
 class Clock extends React.Component {   // Note how we pass props to the base constructor.
-  constructor(props) {              // Class components should always call the base constructor with props.
+  constructor(props) {            // Class components should always call the base constructor with props.
     super(props);
     this.state = {date: new Date()};
   }
@@ -417,7 +417,7 @@ this.setState({comment: 'Hello'});
 ```
 The only place where you can assign `this.state` is the `constructor`.
 
-#### (2) State Updates May Be Asynchronous
+##### (2) State Updates May Be Asynchronous
 React may batch multiple setState() calls into a single update for performance.
 
 Because this.props and this.state may be updated asynchronously, you should not rely on their values for calculating the next state.
@@ -440,7 +440,7 @@ this.setState((state, props) => ({
 }));
 ```
 
-#### (3) State Updates are Merged
+##### (3) State Updates are Merged
 When you call `setState()`, React merges the object you provide into the current state.
 
 For example, your state may contain several independent variables.
