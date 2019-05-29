@@ -263,7 +263,7 @@ class Clock extends React.Component {
 **2.** Add a class constructor that assigns the initial `this.state`.
 ```jsx
 class Clock extends React.Component {   // Note how we pass props to the base constructor.
-  constructor(props) {                  // Class components should always call the base constructor with props.
+  constructor(props) {              // Class components should always call the base constructor with props.
     super(props);
     this.state = {date: new Date()};
   }
@@ -400,6 +400,76 @@ Let’s quickly recap what’s going on and the order in which the methods are c
 **4.** Every second the browser calls the `tick()` method. Inside it, the `Clock` component schedules a UI update by calling `setState()` with an object containing the current time. Thanks to the setState() call, React knows the state has changed, and calls the `render()` method again to learn what should be on the screen. This time, `this.state.date` in the `render()` method will be different, and so the render output will include the updated time. React updates the DOM accordingly.
 
 **5.** If the `Clock` component is ever removed from the DOM, React calls the `componentWillUnmount()` lifecycle method so the timer is stopped.
+
+### Using State Correctly
+There are three things you should know about `setState()`.
+
+##### (1) Do Not Modify State Directly
+For example, this will not re-render a component:
+```jsx
+// Wrong
+this.state.comment = 'Hello';
+```
+Instead, use `setState()`:
+```jsx
+// Correct
+this.setState({comment: 'Hello'});
+```
+The only place where you can assign `this.state` is the `constructor`.
+
+#### (2) State Updates May Be Asynchronous
+React may batch multiple setState() calls into a single update for performance.
+
+Because this.props and this.state may be updated asynchronously, you should not rely on their values for calculating the next state.
+
+For example, this code may fail to update the counter.
+```jsx
+// Wrong
+this.setState({
+  counter: this.state.counter + this.props.increment,
+});
+```
+
+To fix it, use a second form of `setState()` that accepts a function rather than an object. 
+
+That function will receive the previous state as the first argument, and the props at the time the update is applied as the second argument.
+```jsx
+// Correct
+this.setState((state, props) => ({
+  counter: state.counter + props.increment
+}));
+```
+
+#### (3) State Updates are Merged
+When you call `setState()`, React merges the object you provide into the current state.
+
+For example, your state may contain several independent variables.
+```jsx
+constructor(props) {
+  super(props);
+  this.state = {
+    posts: [],
+    comments: []
+  };
+}
+ ```
+Then you can update them independently with separate `setState()` calls:
+```jsx
+componentDidMount() {
+  fetchPosts().then(response => {
+    this.setState({
+      posts: response.posts
+    });
+  });
+
+  fetchComments().then(response => {
+    this.setState({
+      comments: response.comments
+    });
+   });
+}
+```
+The merging is shallow, so `this.setState({comments})` leaves `this.state.posts` intact, but completely replaces `this.state.comments`.
 
 
 
