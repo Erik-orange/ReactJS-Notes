@@ -471,7 +471,7 @@ componentDidMount() {
 ```
 The merging is shallow, so `this.setState({comments})` leaves `this.state.posts` intact, but completely replaces `this.state.comments`.
 
-
+### The Data Flows Down
 
 
 
