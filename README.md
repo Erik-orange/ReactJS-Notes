@@ -44,3 +44,32 @@ const element = (
   </div>
 );
 ```
+
+### JSX Represents Objects
+Babel compiles JSX down to `React.createElement()` calls.
+
+The following two code snippets are identical under the hood.
+```jsx
+const element = (
+  <h1 className="greeting">
+    Hello, world!
+  </h1>
+);
+```
+
+```jsx
+const element = React.createElement(
+  'h1',
+  {className: 'greeting'},
+  'Hello, world!'
+);
+```
+`React.createElement()` creates objects called "_React elements_", think of them like descriptions of what you want to see on the screen. 
+
+React reads these objects and uses them to construct the DOM and keep it up to date.
+
+
+
+
+
+
