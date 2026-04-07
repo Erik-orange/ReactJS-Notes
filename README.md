@@ -1,17 +1,18 @@
-# ReactJS-Notes
-___
-## Intro To JSX
+# ReactJS Notes
 
-JSX produces React “elements”.
+## Intro To `JSX`
+
+* `JSX` produces React “`elements`”:
 
 ```jsx
 const element = <h1>Hello, world!</h1>;
 ```
 
-### JSX is an Expression Too
-After compilation, JSX expressions become regular JavaScript function calls and evaluate to JavaScript objects.
+## `JSX` Is An Expression Too
 
-This means that you can use JSX inside of `if` statements and `for` loops, assign it to variables, accept it as arguments, and return it from functions.
+* After compilation, `JSX` expressions become regular JavaScript `function` calls and evaluate to JavaScript `Objects`.
+
+* This means that you can use `JSX` inside of `if`-statements and `for`-loops, assign it to variables, accept it as `arguments`, and return it from `functions`.
 
 ```jsx
 function getGreeting(user) {
@@ -23,22 +24,28 @@ function getGreeting(user) {
 }
 ```
 
-### Specifying Attributes with JSX
-You may use quotes, `" "`, to specify string literals as attributes.
+
+## Specifying Attributes with `JSX`
+
+* You may use quotes, `" "`, to specify `string literals` as `attributes`.
 ```jsx
 const element = <div tabIndex="0"></div>;
 ```
-You may also use curly braces, `{ }`, to embed a JavaScript expression in an attribute.
+
+* You may also use curly braces, `{ }`, to embed a JavaScript `expression` in an `attribute`.
 ```jsx
 const element = <img src={user.avatarUrl}></img>;
 ```
 
-### Specifying Children with JSX
-If a tag is empty, you may close it immediately with `/>`, like XML.
+
+## Specifying Children with JSX
+
+* If a tag is empty, you may close it immediately with `/>`, like `XML`.
 ```jsx
 const element = <img src={user.avatarUrl} />;
 ```
-JSX tags may contain children.
+
+* `JSX` tags may contain children.
 ```jsx
 const element = (
   <div>
@@ -48,10 +55,14 @@ const element = (
 );
 ```
 
-### JSX Represents Objects
-Babel compiles JSX down to `React.createElement()` calls.
 
-The following two code snippets are identical under the hood.
+## `JSX` Represents `Objects`
+
+* Babel compiles `JSX` down to `React.createElement()` calls.
+
+* The following two code snippets are identical under the hood.
+
+#### Snippet #1
 ```jsx
 const element = (
   <h1 className="greeting">
@@ -60,6 +71,7 @@ const element = (
 );
 ```
 
+#### Snippet #2
 ```jsx
 const element = React.createElement(
   'h1',
@@ -67,7 +79,9 @@ const element = React.createElement(
   'Hello, world!'
 );
 ```
-`React.createElement()` creates objects called "_React elements_".
+
+
+* `React.createElement()` creates `Objects` called "_React elements_".
 ```jsx
 const element = {
   type: 'h1',
@@ -77,39 +91,43 @@ const element = {
   }
 };
 ```
-Think of these objects like descriptions of what you want to see on the screen. 
+* Think of these `Objects` like descriptions of what you want to see on the screen. 
+* React reads these `Objects` and uses them to construct the `DOM` and keep it up to date.
 
-React reads these objects and uses them to construct the DOM and keep it up to date.
-
-___
 
 ## Rendering Elements
 
-Elements are the smallest building blocks of React apps.
-
-An element describes what you want to see on the screen
+* `Elements` are the smallest building blocks of React apps.
+* An element describes what you want to see on the screen.
 ```jsx
 const element = <h1>Hello, world</h1>;
 ```
-Unlike browser DOM elements, React elements are plain objects, and are cheap to create. 
+* Unlike browser `DOM` elements, React `elements` are plain `Objects`, and are cheap to create. 
 
-### Rendering an Element into the DOM
-Let’s say there is a `<div>` somewhere in your HTML file.
+
+
+## Rendering an `Element` Into the `DOM`
+
+* Let’s say there is a `<div>` somewhere in your HTML file.
 ```html
 <div id="root"></div>
 ```
-To render a React element into a root DOM node, pass both to `ReactDOM.render()`.
+
+* To render a React `element` into a root `DOM node`, pass both to `ReactDOM.render()`.
 ```jsx
 const element = <h1>Hello, world</h1>;
+
 ReactDOM.render(element, document.getElementById('root'));
 ```
 
-### Updating the Rendered Element
-React elements are `immutable`. Once you create an element, you can’t change its children or attributes.
+## Updating the Rendered `Element`
 
-With our knowledge so far, the only way to update the UI is to create a new element, and pass it to `ReactDOM.render()`.
+* React `elements` are `immutable`!
+* Once you create an `element`, you can’t change its `children` or `attributes`.
 
-Consider this ticking clock example.
+* With our knowledge so far, the only way to update the UI is to create a new `element`, and pass it to `ReactDOM.render()`.
+
+* Consider this ticking clock example:
 ```jsx
 function tick() {
   const element = (
@@ -123,25 +141,29 @@ function tick() {
 
 setInterval(tick, 1000);    // It calls ReactDOM.render() every second from a setInterval() callback.
 ```
-React DOM compares the element and its children to the previous one, and only applies the DOM updates necessary to bring the DOM to the desired state.
 
-___
+* `React DOM` compares the `element` and its `children` to the previous one, and only applies the `DOM` updates necessary to bring the `DOM` to the desired `state`.
 
-## Components and Props
 
-Conceptually, components are like JavaScript functions. They accept arbitrary inputs (called `props`) and return React elements describing what should appear on the screen.
 
-### Function and Class Components
+## `Components` and `props`
+
+* Conceptually, `components` are like JavaScript `functions`.
+* They accept arbitrary inputs (called `props`) and return React `elements` describing what should appear on the screen.
+
+
+## Functional Components and Class Components
+
+* This `function` is a valid React `component` because it accepts a single `props` `Object` argument with data and returns a React `element`:
+
+#### Function Component
 ```jsx
-// Function Component
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
 }
 ```
-This function is a valid React component because it accepts a single `props` object argument with data and returns a React element.
-
+#### Class Component
 ```jsx
-// Class Component
 class Welcome extends React.Component {
   render() {
     return <h1>Hello, {this.props.name}</h1>;
@@ -149,14 +171,18 @@ class Welcome extends React.Component {
 }
 ```
 
-### Rendering a Component
-React elements can also represent user-defined components.
+
+## Rendering a Component
+
+* React `elements` can also represent user-defined `components`.
 ```jsx
 const element = <Welcome name="Sara" />;
 ```
-When React sees an element representing a user-defined component, it passes JSX attributes to this component as a single object. We call this object `props`.
 
-For example, this code renders “Hello, Sara” on the page.
+* When React sees an `element` representing a user-defined `component`, it passes `JSX` attributes to this `component` as a single `Object`.
+    * We call this object `props`.
+
+* For example, this code renders `“Hello, Sara”` on the page:
 ```jsx
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
@@ -168,20 +194,20 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
-Let’s recap what happens in this example:
+* Let’s recap what happens in this example:
+1. We call `ReactDOM.render()` with the `<Welcome name="Sara" />` `element`.
+2. React calls the `Welcome` `component` with `{name: 'Sara'}` as the `props`.
+3. Our `Welcome` `component` returns a `<h1>Hello, Sara</h1>` `element` as the result.
+4. React `DOM` efficiently updates the `DOM` to match `<h1>Hello, Sara</h1>`.
 
-1. We call `ReactDOM.render()` with the `<Welcome name="Sara" />` element.
 
-2. React calls the `Welcome` component with `{name: 'Sara'}` as the `props`.
 
-3. Our `Welcome` component returns a `<h1>Hello, Sara</h1>` element as the result.
+## Composing Components
 
-4. React DOM efficiently updates the DOM to match `<h1>Hello, Sara</h1>`.
 
-### Composing Components
-Components can refer to other components in their output. This lets us use the same component abstraction for any level of detail.
-
-For example, we can create an App component that renders Welcome many times.
+* `Components` can refer to other `components` in their output.
+* This lets us use the same `component` abstraction for any level of detail.
+* For example, we can create an `<App />` component that renders `<Welcome />` many times.
 ```jsx
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
@@ -203,29 +229,28 @@ ReactDOM.render(
 );
 ```
 
-### Props are Read-Only
-Whether you declare a component as a function or a class, it must never modify its own props.
 
-**All React components must act like pure functions with respect to their props.**
+## `props` Are _read-only_
 
-___
+* Whether you declare a `component` as a `function` or a `Class`, it must never modify its own `props`.
 
-## State and Lifecycle
+**All React `components` must act like `pure functions` with respect to their `props`.**
 
-State is similar to `props`, but it is private and fully controlled by the component.
 
-### Converting a Function to a Class
-You can convert a function component like `Clock` to a class in five steps:
+## State And Lifecycle
 
-1. Create an ES6 class, with the same name, that extends `React.Component`.
+* `state` is similar to `props`, but it is private and fully controlled by the `Component`.
 
+
+
+## Converting A Functional Component To A Class Component
+
+You can convert a `Function Component` (like `Clock`) to a `Class Component` in **5** steps:
+1. Create an `ES6` `Class`, with the same name, that `extends React.Component`.
 2. Add a single empty method to it called `render()`.
-
-3. Move the body of the function into the `render()` method.
-
+3. Move the body of the `function` into the `render()` method.
 4. Replace `props` with `this.props` in the `render()` body.
-
-5. Delete the remaining empty function declaration.
+5. Delete the remaining empty `function` declaration.
 ```jsx
 class Clock extends React.Component {
   render() {
@@ -238,14 +263,20 @@ class Clock extends React.Component {
   }
 }
 ```
-`Clock` is now defined as a class rather than a function.
 
-The `render()` method will be called each time an update happens, but as long as we render `<Clock />` into the same DOM node, only a single instance of the `Clock` class will be used. 
+* `Clock` is now defined as a `Class` rather than a `function`.
 
-This lets us use additional features such as local state and lifecycle methods.
+* The `render()` method will be called each time an update happens, but as long as we render `<Clock />` into the same DOM node, only a single instance of the `Clock` class will be used. 
 
-### Adding Local State to a Class
-We will move the `date` from props to state in three steps:
+* This lets us use additional features such as local `state` and `lifecycle` methods.
+
+
+---
+
+
+### Adding Local `state` to a `Class`
+
+* We will move the `date` from props to state in **3** steps:
 
 **1.** Replace `this.props.date` with `this.state.date` in the `render()` method.
 ```jsx
@@ -312,7 +343,8 @@ ReactDOM.render(
 ```
 Next, we’ll make the Clock set up its own timer and update itself every second.
 
-### Adding Lifecycle Methods to a Class
+### Adding Lifecycle Methods To A Class
+
 In applications with many components, it’s very important to free up resources taken by the components when they are destroyed.
 
 We want to set up a timer whenever the Clock is rendered to the DOM for the first time. This is called “mounting” in React.
@@ -328,6 +360,7 @@ componentDidMount() {
     );
 }
 ```
+
 The `componentDidMount()` method runs after the component output has been rendered to the DOM. This is a good place to set up a timer.
 
 While `this.props` is set up by React itself and `this.state` has a special meaning, you are free to add additional fields to the class manually if you need to store something that doesn’t participate in the data flow (like a timer ID).
@@ -337,6 +370,7 @@ componentWillUnmount() {
     clearInterval(this.timerID);
 }
 ```
+
 We will tear down the timer in the `componentWillUnmount()` lifecycle method.
 
 Finally, we will implement a method called `tick()` that the `Clock` component will run every second.
@@ -349,6 +383,7 @@ tick() {
     });
 }
 ```
+
 Here's the final result:
 ```jsx
 class Clock extends React.Component {
@@ -402,6 +437,7 @@ Let’s quickly recap what’s going on and the order in which the methods are c
 **5.** If the `Clock` component is ever removed from the DOM, React calls the `componentWillUnmount()` lifecycle method so the timer is stopped.
 
 ### Using State Correctly
+
 There are three things you should know about `setState()`.
 
 ##### (1) Do Not Modify State Directly
