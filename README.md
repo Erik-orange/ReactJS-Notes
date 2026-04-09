@@ -274,11 +274,11 @@ class Clock extends React.Component {
 ---
 
 
-### Adding Local `state` to a `Class`
+## Adding Local `state` to a `Class`
 
 * We will move the `date` from props to state in **3** steps:
 
-**1.** Replace `this.props.date` with `this.state.date` in the `render()` method.
+### 1. Replace `this.props.date` with `this.state.date` in the `render()` method.
 ```jsx
 class Clock extends React.Component {
   render() {
@@ -291,7 +291,8 @@ class Clock extends React.Component {
   }
 }
 ```
-**2.** Add a class constructor that assigns the initial `this.state`.
+
+### 2. Add a class constructor that assigns the initial `this.state`.
 ```jsx
 class Clock extends React.Component {   // Note how we pass props to the base constructor.
   constructor(props) {            // Class components should always call the base constructor with props.
@@ -309,7 +310,8 @@ class Clock extends React.Component {   // Note how we pass props to the base co
   }
 }
 ```
-**3.** Remove the `date` prop from the `<Clock />` element.
+
+### 3. Remove the `date` prop from the `<Clock />` element.
 ```jsx
 ReactDOM.render(
   <Clock />,
@@ -341,9 +343,12 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
-Next, we’ll make the Clock set up its own timer and update itself every second.
 
-### Adding Lifecycle Methods To A Class
+* Next, we’ll make the `Clock` set up its own timer and update itself every second.
+
+
+
+## Adding Lifecycle Methods To A Class
 
 In applications with many components, it’s very important to free up resources taken by the components when they are destroyed.
 
