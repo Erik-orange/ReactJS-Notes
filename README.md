@@ -271,8 +271,6 @@ class Clock extends React.Component {
 * This lets us use additional features such as local `state` and `lifecycle` methods.
 
 
----
-
 
 ## Adding Local `state` to a `Class`
 
@@ -295,7 +293,7 @@ class Clock extends React.Component {
 ### 2. Add a class constructor that assigns the initial `this.state`.
 ```jsx
 class Clock extends React.Component {   // Note how we pass props to the base constructor.
-  constructor(props) {            // Class components should always call the base constructor with props.
+  constructor(props) {                  // Class components should always call the base constructor with props.
     super(props);
     this.state = {date: new Date()};
   }
@@ -318,9 +316,9 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
-We will later add the timer code back to the component itself.
 
-The result looks like this:
+* We will later add the timer code back to the component itself.
+  *The result looks like this:
 ```jsx
 class Clock extends React.Component {
   constructor(props) {
@@ -350,13 +348,17 @@ ReactDOM.render(
 
 ## Adding Lifecycle Methods To A Class
 
-In applications with many components, it’s very important to free up resources taken by the components when they are destroyed.
+* In applications with many components, it’s very important to free up resources taken by the components when they are destroyed.
 
-We want to set up a timer whenever the Clock is rendered to the DOM for the first time. This is called “mounting” in React.
+* We want to set up a timer whenever the `Clock` is rendered to the `DOM` for the first time.
+  * This is called `mounting` in React.
 
-We also want to clear that timer whenever the DOM produced by the Clock is removed. This is called “unmounting” in React.
+* We also want to clear that timer whenever the `DOM` produced by the `Clock` is removed.
+  * This is called `unmounting` in React.
 
-We can declare special methods on the component class to run some code when a component mounts and unmounts. These are called "lifecycle methods".
+* We can declare special methods on the `Component` class to run some code when a `Component` `mounts` and `unmounts`.
+  * These are called `lifecycle methods`.
+
 ```jsx
 componentDidMount() {
     this.timerID = setInterval(     // Note how we save the timer ID right on this
@@ -366,9 +368,10 @@ componentDidMount() {
 }
 ```
 
-The `componentDidMount()` method runs after the component output has been rendered to the DOM. This is a good place to set up a timer.
+* The `componentDidMount()` method runs after the `Component` output has been rendered to the `DOM`.
+  * This is a good place to set up a timer.
 
-While `this.props` is set up by React itself and `this.state` has a special meaning, you are free to add additional fields to the class manually if you need to store something that doesn’t participate in the data flow (like a timer ID).
+* While `this.props` is set up by React itself and `this.state` has a special meaning, you are free to add additional fields to the class manually if you need to store something that doesn’t participate in the data flow (like a timer ID).
 
 ```jsx  
 componentWillUnmount() {
@@ -376,11 +379,11 @@ componentWillUnmount() {
 }
 ```
 
-We will tear down the timer in the `componentWillUnmount()` lifecycle method.
+* We will tear down the timer in the `componentWillUnmount()` lifecycle method.
 
-Finally, we will implement a method called `tick()` that the `Clock` component will run every second.
+* Finally, we will implement a method called `tick()` that the `Clock` component will run every second.
 
-It will use `this.setState()` to schedule updates to the component local state.
+* It will use `this.setState()` to schedule updates to the component local state.
 ```jsx
 tick() {
     this.setState({
@@ -389,7 +392,7 @@ tick() {
 }
 ```
 
-Here's the final result:
+#### Here's The Final Result:
 ```jsx
 class Clock extends React.Component {
   constructor(props) {
@@ -429,41 +432,54 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
-Let’s quickly recap what’s going on and the order in which the methods are called:
+* Let’s quickly recap what’s going on and the order in which the methods are called:
 
-**1.** When `<Clock />` is passed to `ReactDOM.render()`, React calls the constructor of the `Clock` component. Since `Clock` needs to display the current time, it initializes `this.state` with an object including the current time. We will later update this state.
+#### 1.
+* When `<Clock />` is passed to `ReactDOM.render()`, React calls the constructor of the `Clock` component. Since `Clock` needs to display the current time, it initializes `this.state` with an object including the current time. We will later update this state.
 
-**2.** React then calls the `Clock` component’s `render()` method. This is how React learns what should be displayed on the screen. React then updates the DOM to match the `Clock`’s render output.
+#### 2.
+* React then calls the `Clock` component’s `render()` method. This is how React learns what should be displayed on the screen. React then updates the DOM to match the `Clock`’s render output.
 
-**3.** When the `Clock` output is inserted in the DOM, React calls the `componentDidMount()` lifecycle method. Inside it, the `Clock` component asks the browser to set up a timer to call the component’s `tick()` method once a second.
+#### 3.
+* When the `Clock` output is inserted in the DOM, React calls the `componentDidMount()` lifecycle method. Inside it, the `Clock` component asks the browser to set up a timer to call the component’s `tick()` method once a second.
 
-**4.** Every second the browser calls the `tick()` method. Inside it, the `Clock` component schedules a UI update by calling `setState()` with an object containing the current time. Thanks to the setState() call, React knows the state has changed, and calls the `render()` method again to learn what should be on the screen. This time, `this.state.date` in the `render()` method will be different, and so the render output will include the updated time. React updates the DOM accordingly.
+#### 4.
+Every second the browser calls the `tick()` method. Inside it, the `Clock` component schedules a UI update by calling `setState()` with an object containing the current time. Thanks to the setState() call, React knows the state has changed, and calls the `render()` method again to learn what should be on the screen. This time, `this.state.date` in the `render()` method will be different, and so the render output will include the updated time. React updates the DOM accordingly.
 
-**5.** If the `Clock` component is ever removed from the DOM, React calls the `componentWillUnmount()` lifecycle method so the timer is stopped.
+#### 5.
+If the `Clock` component is ever removed from the DOM, React calls the `componentWillUnmount()` lifecycle method so the timer is stopped.
 
-### Using State Correctly
 
-There are three things you should know about `setState()`.
+
+## Using `state` Correctly
+
+* There are **3** things you should know about `setState()`:
+
 
 ##### (1) Do Not Modify State Directly
-For example, this will not re-render a component:
+
+* For example, this will not re-render a component:
 ```jsx
 // Wrong
 this.state.comment = 'Hello';
 ```
-Instead, use `setState()`:
+
+* Instead, use `setState()`:
 ```jsx
 // Correct
 this.setState({comment: 'Hello'});
 ```
-The only place where you can assign `this.state` is the `constructor`.
+
+* The only place where you can assign `this.state` is the `constructor`.
+
 
 ##### (2) State Updates May Be Asynchronous
-React may batch multiple setState() calls into a single update for performance.
 
-Because this.props and this.state may be updated asynchronously, you should not rely on their values for calculating the next state.
+* React may batch multiple setState() calls into a single update for performance.
 
-For example, this code may fail to update the counter.
+* Because this.props and this.state may be updated asynchronously, you should not rely on their values for calculating the next state.
+
+* For example, this code may fail to update the counter.
 ```jsx
 // Wrong
 this.setState({
@@ -471,9 +487,10 @@ this.setState({
 });
 ```
 
-To fix it, use a second form of `setState()` that accepts a function rather than an object. 
+* To fix it, use a second form of `setState()` that accepts a function rather than an object. 
 
-That function will receive the previous state as the first argument, and the props at the time the update is applied as the second argument.
+* That function will receive the previous state as the first argument, and the props at the time the update is applied as the second argument.
+* 
 ```jsx
 // Correct
 this.setState((state, props) => ({
@@ -482,9 +499,10 @@ this.setState((state, props) => ({
 ```
 
 ##### (3) State Updates are Merged
-When you call `setState()`, React merges the object you provide into the current state.
 
-For example, your state may contain several independent variables.
+* When you call `setState()`, React merges the `Object` you provide into the current `state`.
+
+* For example, your `state` may contain several independent variables.
 ```jsx
 constructor(props) {
   super(props);
@@ -494,7 +512,8 @@ constructor(props) {
   };
 }
  ```
-Then you can update them independently with separate `setState()` calls:
+
+* Then you can update them independently with separate `setState()` calls:
 ```jsx
 componentDidMount() {
   fetchPosts().then(response => {
@@ -510,30 +529,37 @@ componentDidMount() {
    });
 }
 ```
-The merging is shallow, so `this.setState({comments})` leaves `this.state.posts` intact, but completely replaces `this.state.comments`.
 
-### The Data Flows Down
-Neither parent nor child components can know if a certain component is stateful or stateless.
+* The merging is shallow, so `this.setState({comments})` leaves `this.state.posts` intact, but completely replaces `this.state.comments`.
 
-This is why state is often called local or encapsulated. It is not accessible to any component other than the one that owns and sets it.
 
-A component may choose to pass its state down as props to its child components:
+
+## The Data Flows Down
+
+* Neither parent nor child components can know if a certain component is stateful or stateless.
+
+* This is why state is often called local or encapsulated. It is not accessible to any component other than the one that owns and sets it.
+
+* A component may choose to pass its state down as props to its child components:
 ```jsx
 <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
 ```
-This also works for user-defined components:
+
+* This also works for user-defined components:
 ```jsx
 <FormattedDate date={this.state.date} />
 ```
-The `FormattedDate` component would receive the `date` in its props and wouldn’t know whether it came from the `Clock`’s state, from the `Clock`’s props, or was typed by hand:
+
+* The `FormattedDate` component would receive the `date` in its props and wouldn’t know whether it came from the `Clock`’s state, from the `Clock`’s props, or was typed by hand:
 ```jsx
 function FormattedDate(props) {
   return <h2>It is {props.date.toLocaleTimeString()}.</h2>;
 }
 ```
-This is commonly called a “top-down” or “unidirectional” data flow. Any state is always owned by some specific component, and any data or UI derived from that state can only affect components “below” them in the tree.
 
-If you imagine a component tree as a waterfall of props, each component’s state is like an additional water source that joins it at an arbitrary point but also flows down.
+* This is commonly called a “top-down” or “unidirectional” data flow. Any state is always owned by some specific component, and any data or UI derived from that state can only affect components “below” them in the tree.
+
+* If you imagine a component tree as a waterfall of props, each component’s state is like an additional water source that joins it at an arbitrary point but also flows down.
 
 ```jsx
 function App() {
@@ -551,7 +577,8 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
-In React apps, whether a component is stateful or stateless is considered an implementation detail of the component that may change over time. You can use stateless components inside stateful components, and vice versa.
+
+* In React apps, whether a component is stateful or stateless is considered an implementation detail of the component that may change over time. You can use stateless components inside stateful components, and vice versa.
 
 
 
